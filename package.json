@@ -1,4 +1,25 @@
 {
+  "name": "react-my-reads",
+  "version": "0.1.0",
+  "description": "Udacity React Nanodegree - My Reads.",
+  "main": "server/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/VanessaEly/react-my-reads"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Vanessa Carla Ely",
+    "email": "vanessa.sdev@gmail.com",
+    "url": "https://github.com/VanessaEly"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js"
+  },
   "dependencies": {
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
@@ -6,13 +27,12 @@
     "react-router-dom": "^4.3.1"
   },
   "devDependencies": {
-    "eslint": "^5.13.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "5.4.0",
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jsx-a11y": "6.1.1",
+    "eslint-plugin-react": "7.11.1",
     "react-scripts": "0.9.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   }
 }
