@@ -9,7 +9,8 @@ import Bookshelf from '../components/Bookshelf';
  * @constructor
  * @param {Object} props - All the props that were defined by the caller of this component.
  * @param {Object[]} props.books - List of all the books on the app.
- * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book needs to be updated.
+ * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book is updated.
+ * @param {onUpdateRating} props.onUpdateRating - The callback executed when a rating is updated.
  */
 const HomePage = (props) => {
   const shelfs = [
@@ -30,6 +31,7 @@ const HomePage = (props) => {
               title={shelf.title}
               books={props.books.filter(book => book.shelf === shelf.name)}
               onUpdateBook={props.onUpdateBook}
+              onUpdateRating={props.onUpdateRating}
             />
           ))}
         </div>
@@ -46,6 +48,7 @@ HomePage.propTypes = {
   // using .arrayOf because airbnb linter forbiddens .array, recommending this one
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
   onUpdateBook: PropTypes.func.isRequired,
+  onUpdateRating: PropTypes.func.isRequired,
 };
 
 export default HomePage;

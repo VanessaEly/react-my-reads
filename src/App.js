@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+import sortBy from 'sort-by';
 import './App.css';
 // Importing app utils
 import * as BooksAPI from './utils/BooksAPI';
@@ -30,13 +31,30 @@ class BooksApp extends React.Component {
    * Here, it is used call the API to get all the books
    */
   componentDidMount() {
-    BooksAPI.getAll().then(books => (this.setState(() => ({ books }))));
+    BooksAPI.getAll().then(books => (this.setState(() => ({ books: books.sort(sortBy('title')) }))));
   }
 
   /**
-   * Change a books shelf or Adds it to the Library in a shelf
-   * @param {string} id
-   * @param {string} shelf
+   * Update a book's rating based on clicks on its stars
+   * @param {number} newRating - Star rating that was clicked and will be added to average.
+   * @param {Object} book - Book that was clicked.
+   */
+  updateRating = (newRating, book) => {
+    // calculating new average rating
+    book.averageRating = book.averageRating
+      ? ((book.averageRating * book.ratingsCount) + newRating) / (book.ratingsCount + 1)
+      : newRating;
+    // updating number of votes
+    book.ratingsCount = book.ratingsCount ? book.ratingsCount + 1 : 1;
+    this.setState(prevState => ({
+      books: [...prevState.books.filter(key => (key.id !== book.id)), book].sort(sortBy('title')),
+    }));
+  };
+
+  /**
+   * Change or add a book's shelf
+   * @param {Object} book - Book that will have it's shelf updated
+   * @param {string} shelf - The book's new shelf
    */
   updateBook = (book, shelf) => {
     BooksAPI.update(book, shelf).then(() => {
@@ -44,7 +62,7 @@ class BooksApp extends React.Component {
       // the filtered list without the updated book
       // with the new book, which has its shelf updated using spread operator too
       this.setState(prevState => ({
-        books: [...prevState.books.filter(key => (key.id !== book.id)), { ...book, shelf }],
+        books: [...prevState.books.filter(key => (key.id !== book.id)), { ...book, shelf }].sort(sortBy('title')),
       }));
     });
   };
@@ -53,8 +71,8 @@ class BooksApp extends React.Component {
     const { books } = this.state;
     return (
       <div className="app">
-        <Route path="/search" render={() => (<SearchBooksPage books={books} onUpdateBook={this.updateBook} />)} />
-        <Route exact path="/" render={() => (<HomePage books={books} onUpdateBook={this.updateBook} />)} />
+        <Route path="/search" render={() => (<SearchBooksPage books={books} onUpdateBook={this.updateBook} onUpdateRating={this.updateRating} />)} />
+        <Route exact path="/" render={() => (<HomePage books={books} onUpdateBook={this.updateBook} onUpdateRating={this.updateRating} />)} />
       </div>
     );
   }

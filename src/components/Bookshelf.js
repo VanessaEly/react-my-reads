@@ -9,10 +9,13 @@ import Book from './Book';
  * @param {Object} props - All the props that were defined by the caller of this component.
  * @param {Object[]} props.books - List of books from the current shelf.
  * @param {string} props.title - The title of the current shelf.
- * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book needs to be updated.
+ * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book is updated.
+ * @param {onUpdateRating} props.onUpdateRating - The callback executed when a rating is updated.
  */
 const Bookshelf = (props) => {
-  const { title, books, onUpdateBook } = props;
+  const {
+    title, books, onUpdateBook, onUpdateRating,
+  } = props;
   return (
     <div className="bookshelf">
       <h2 className="bookshelf-title">{title}</h2>
@@ -26,9 +29,10 @@ const Bookshelf = (props) => {
                 imageLinks={book.imageLinks}
                 shelf={book.shelf}
                 authors={book.authors}
-                onUpdateBook={onUpdateBook}
                 averageRating={book.averageRating ? book.averageRating : 0}
-								ratingsCount={book.ratingsCount ? book.ratingsCount : 0}
+                ratingsCount={book.ratingsCount ? book.ratingsCount : 0}
+                onUpdateBook={onUpdateBook}
+                onUpdateRating={newRating => onUpdateRating(newRating, book)}
               />
             </li>
           ))}
@@ -44,6 +48,7 @@ Bookshelf.propTypes = {
   // using .arrayOf because airbnb linter forbiddens .array, recommending this one
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
   onUpdateBook: PropTypes.func.isRequired,
+  onUpdateRating: PropTypes.func.isRequired,
 };
 
 export default Bookshelf;

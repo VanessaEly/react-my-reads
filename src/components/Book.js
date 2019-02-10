@@ -10,13 +10,22 @@ import BookRating from './BookRating';
  * @param {Object} props.imageLinks - Object that contains the urls of the book cover image.
  * @param {string} [props.shelf=none] - The book's shelf category.
  * @param {Object[]} [props.authors=[]] - The authors of the book.
- * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book needs to be updated.
  * @param {number} [props.averageRating=0] - The average value of the book ratings.
  * @param {number} [props.ratingsCount=0] - The total number of book ratings.
+ * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book is updated.
+ * @param {onUpdateRating} props.onUpdateRating - The callback executed when a rating is updated.
  */
 const Books = (props) => {
   const {
-    id, title, imageLinks, shelf, authors, onUpdateBook,
+    id,
+    title,
+    imageLinks,
+    shelf,
+    authors,
+    averageRating,
+    ratingsCount,
+    onUpdateBook,
+    onUpdateRating,
   } = props;
   return (
     <div id={id} className="book">
@@ -33,11 +42,13 @@ const Books = (props) => {
         </div>
       </div>
       <div className="book-rating-container">
-				<BookRating
-					value={props.averageRating}
-					count={props.ratingsCount}
-				/>
-			</div>
+        <BookRating
+          name={id}
+          value={averageRating}
+          count={ratingsCount}
+          onUpdateRating={onUpdateRating}
+        />
+      </div>
       <div className="book-title">{title}</div>
       <div className="book-authors">{authors}</div>
     </div>
@@ -61,9 +72,10 @@ Books.propTypes = {
   shelf: PropTypes.string,
   // using .arrayOf because airbnb linter forbiddens .array
   authors: PropTypes.arrayOf(PropTypes.string),
-  onUpdateBook: PropTypes.func.isRequired,
   averageRating: PropTypes.number,
   ratingsCount: PropTypes.number,
+  onUpdateBook: PropTypes.func.isRequired,
+  onUpdateRating: PropTypes.func.isRequired,
 };
 
 export default Books;

@@ -11,7 +11,8 @@ import * as BooksAPI from '../utils/BooksAPI';
  * @constructor
  * @param {Object} props - All the props that were defined by the caller of this component.
  * @param {Object[]} props.books - List of all the books on the app.
- * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book needs to be updated.
+ * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book is updated.
+ * @param {onUpdateRating} props.onUpdateRating - The callback executed when a rating is updated.
  */
 class SearchBooksPage extends Component {
   constructor() {
@@ -44,7 +45,7 @@ class SearchBooksPage extends Component {
         // all books in the main page with the books returned from search to update their shelf
         response.map(book => (
           books.filter(b => b.id === book.id)
-            .forEach((b) => { book.shelf = b.shelf; }) // eslint-disable-line no-param-reassign
+            .forEach((b) => { book.shelf = b.shelf; })
         ));
         this.setState({ filteredBooks: response });
       }
@@ -52,7 +53,7 @@ class SearchBooksPage extends Component {
   };
 
   render() {
-    const { onUpdateBook } = this.props;
+    const { onUpdateBook, onUpdateRating } = this.props;
     const { filteredBooks } = this.state;
     return (
       <div className="search-books">
@@ -77,8 +78,9 @@ class SearchBooksPage extends Component {
                   shelf={book.shelf}
                   authors={book.authors}
                   averageRating={(book.averageRating) ? book.averageRating : 0}
-									ratingsCount={(book.ratingsCount) ? book.ratingsCount : 0}
+                  ratingsCount={(book.ratingsCount) ? book.ratingsCount : 0}
                   onUpdateBook={onUpdateBook}
+                  onUpdateRating={newRating => onUpdateRating(newRating, book)}
                 />
               </li>
             ))}
@@ -94,6 +96,7 @@ SearchBooksPage.propTypes = {
   // using .arrayOf because airbnb linter forbiddens .array, recommending this one
   books: PropTypes.arrayOf(PropTypes.object).isRequired,
   onUpdateBook: PropTypes.func.isRequired,
+  onUpdateRating: PropTypes.func.isRequired,
 };
 
 export default SearchBooksPage;
