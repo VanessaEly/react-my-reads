@@ -1,6 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/**
+ * @description Book component, used to display book details
+ * @constructor
+ * @param {string} props.id - The id of the book.
+ * @param {string} props.title - The title of the book.
+ * @param {Object} props.imageLinks - Object that contains the urls of the book cover image.
+ * @param {string} [props.shelf=none] - The book's shelf category.
+ * @param {Object[]} [props.authors=[]] - The authors of the book.
+ * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book needs to be updated.
+ * @param {number} [props.averageRating=0] - The average value of the book ratings.
+ * @param {number} [props.ratingsCount=0] - The total number of book ratings.
+ */
 const Books = (props) => {
   const {
     id, title, imageLinks, shelf, authors, onUpdateBook,
@@ -25,15 +37,26 @@ const Books = (props) => {
   );
 };
 
+// Assign default values to the optional props
+Books.defaultProps = {
+  authors: [],
+  shelf: 'none',
+  // averageRating: 0,
+  // ratingsCount: 0,
+};
+
+// Type checking the props of the component
 Books.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   // using instanceOf because airbnb linter forbiddens .object
   imageLinks: PropTypes.instanceOf(Object).isRequired,
-  shelf: PropTypes.string.isRequired,
+  shelf: PropTypes.string,
   // using .arrayOf because airbnb linter forbiddens .array
-  authors: PropTypes.arrayOf(PropTypes.string).isRequired,
+  authors: PropTypes.arrayOf(PropTypes.string),
   onUpdateBook: PropTypes.func.isRequired,
+  // averageRating: PropTypes.number,
+  // ratingsCount: PropTypes.number,
 };
 
 export default Books;

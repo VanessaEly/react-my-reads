@@ -1,14 +1,17 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import './App.css';
-
 // Importing app utils
 import * as BooksAPI from './utils/BooksAPI';
-
 // Importing app views
-import SearchBooks from './views/SearchBooksPage';
+import SearchBooksPage from './views/SearchBooksPage';
 import HomePage from './views/HomePage';
 
+/**
+ * @description Main Books App component.
+ * @constructor
+ * @param {Object} props - All the props that were defined by the caller of this component.
+ */
 class BooksApp extends React.Component {
   constructor(props) {
     super(props);
@@ -50,7 +53,7 @@ class BooksApp extends React.Component {
     const { books } = this.state;
     return (
       <div className="app">
-        <Route path="/search" render={() => (<SearchBooks books={books} onUpdateBook={this.updateBook} />)} />
+        <Route path="/search" render={() => (<SearchBooksPage books={books} onUpdateBook={this.updateBook} />)} />
         <Route exact path="/" render={() => (<HomePage books={books} onUpdateBook={this.updateBook} />)} />
       </div>
     );

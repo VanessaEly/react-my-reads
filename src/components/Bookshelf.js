@@ -1,7 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+// importing app components
 import Book from './Book';
 
+/**
+ * @description Bookshelf element, displaying all the books from the current shelf category
+ * @constructor
+ * @param {Object} props - All the props that were defined by the caller of this component.
+ * @param {Object[]} props.books - List of books from the current shelf.
+ * @param {string} props.title - The title of the current shelf.
+ * @param {onUpdateBook} props.onUpdateBook - The callback executed when a book needs to be updated.
+ */
 const Bookshelf = (props) => {
   const { title, books, onUpdateBook } = props;
   return (
@@ -27,6 +36,7 @@ const Bookshelf = (props) => {
   );
 };
 
+// Type checking the props of the component
 Bookshelf.propTypes = {
   title: PropTypes.string.isRequired,
   // using .arrayOf because airbnb linter forbiddens .array, recommending this one
