@@ -76,6 +76,8 @@ class SearchBooksPage extends Component {
                   imageLinks={book.imageLinks}
                   shelf={book.shelf}
                   authors={book.authors}
+                  averageRating={(book.averageRating) ? book.averageRating : 0}
+									ratingsCount={(book.ratingsCount) ? book.ratingsCount : 0}
                   onUpdateBook={onUpdateBook}
                 />
               </li>

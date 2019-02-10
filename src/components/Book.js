@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import BookRating from './BookRating';
 
 /**
  * @description Book component, used to display book details
@@ -31,6 +32,12 @@ const Books = (props) => {
           </select>
         </div>
       </div>
+      <div className="book-rating-container">
+				<BookRating
+					value={props.averageRating}
+					count={props.ratingsCount}
+				/>
+			</div>
       <div className="book-title">{title}</div>
       <div className="book-authors">{authors}</div>
     </div>
@@ -41,8 +48,8 @@ const Books = (props) => {
 Books.defaultProps = {
   authors: [],
   shelf: 'none',
-  // averageRating: 0,
-  // ratingsCount: 0,
+  averageRating: 0,
+  ratingsCount: 0,
 };
 
 // Type checking the props of the component
@@ -55,8 +62,8 @@ Books.propTypes = {
   // using .arrayOf because airbnb linter forbiddens .array
   authors: PropTypes.arrayOf(PropTypes.string),
   onUpdateBook: PropTypes.func.isRequired,
-  // averageRating: PropTypes.number,
-  // ratingsCount: PropTypes.number,
+  averageRating: PropTypes.number,
+  ratingsCount: PropTypes.number,
 };
 
 export default Books;

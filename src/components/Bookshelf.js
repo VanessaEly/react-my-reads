@@ -27,6 +27,8 @@ const Bookshelf = (props) => {
                 shelf={book.shelf}
                 authors={book.authors}
                 onUpdateBook={onUpdateBook}
+                averageRating={book.averageRating ? book.averageRating : 0}
+								ratingsCount={book.ratingsCount ? book.ratingsCount : 0}
               />
             </li>
           ))}
