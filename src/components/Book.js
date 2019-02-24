@@ -31,7 +31,7 @@ const Books = (props) => {
     <div id={id} className="book">
       <div className="book-top">
         <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${imageLinks.thumbnail})` }} />
-        <div className="book-shelf-changer">
+        <div className="book-shelf-changer select">
           <select value={shelf} onChange={event => onUpdateBook(props, event.target.value)}>
             <option value="move" disabled>Move to...</option>
             <option value="currentlyReading">Currently Reading</option>

@@ -7,6 +7,8 @@ import * as BooksAPI from './utils/BooksAPI';
 // Importing app views
 import SearchBooksPage from './views/SearchBooksPage';
 import HomePage from './views/HomePage';
+// Importing app components
+import Loading from './components/Loading';
 
 /**
  * @description Main Books App component.
@@ -22,7 +24,7 @@ class BooksApp extends React.Component {
      */
 
     /** @type {ComponentState} */
-    this.state = { books: [] };
+    this.state = { books: [], isLoading: false };
   }
 
   /**
@@ -31,7 +33,8 @@ class BooksApp extends React.Component {
    * Here, it is used call the API to get all the books
    */
   componentDidMount() {
-    BooksAPI.getAll().then(books => (this.setState(() => ({ books: books.sort(sortBy('title')) }))));
+    this.setState({ isLoading: true });
+    BooksAPI.getAll().then(books => (this.setState(() => ({ books: books.sort(sortBy('title')), isLoading: false }))));
   }
 
   /**
@@ -70,9 +73,12 @@ class BooksApp extends React.Component {
   render() {
     const { books } = this.state;
     return (
-      <div className="app">
-        <Route path="/search" render={() => (<SearchBooksPage books={books} onUpdateBook={this.updateBook} onUpdateRating={this.updateRating} />)} />
-        <Route exact path="/" render={() => (<HomePage books={books} onUpdateBook={this.updateBook} onUpdateRating={this.updateRating} />)} />
+      <div>
+        {this.state.isLoading ? <Loading />:<div></div>}
+        <div className="app content">
+          <Route path="/search" render={() => (<SearchBooksPage books={books} onUpdateBook={this.updateBook} onUpdateRating={this.updateRating} />)} />
+          <Route exact path="/" render={() => (<HomePage books={books} onUpdateBook={this.updateBook} onUpdateRating={this.updateRating} />)} />
+        </div>
       </div>
     );
   }
