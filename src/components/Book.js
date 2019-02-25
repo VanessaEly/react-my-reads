@@ -30,7 +30,7 @@ const Books = (props) => {
   return (
     <div id={id} className="book">
       <div className="book-top">
-        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${imageLinks.thumbnail})` }} />
+        <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${imageLinks ? imageLinks.thumbnail : 'https://books.google.com/books/content/images/frontcover/notfound'})` }} />
         <div className="book-shelf-changer select">
           <select value={shelf} onChange={event => onUpdateBook(props, event.target.value)}>
             <option value="move" disabled>Move to...</option>

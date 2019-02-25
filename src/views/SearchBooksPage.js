@@ -37,7 +37,10 @@ class SearchBooksPage extends Component {
   updateQuery = (query) => {
     const { books } = this.props;
     // if query value is empty, don't search
-    if (query.trim() === '') return;
+    if (query.trim() === '') {
+      this.setState({ filteredBooks: [] });
+      return;
+    }
     BooksAPI.search(query, 10).then((response) => {
       // if a book was found, update state
       if (response && response.length) {
@@ -48,7 +51,7 @@ class SearchBooksPage extends Component {
             .forEach((b) => { book.shelf = b.shelf; })
         ));
         this.setState({ filteredBooks: response });
-      }
+      } else this.setState({ filteredBooks: false });
     });
   };
 
@@ -68,22 +71,38 @@ class SearchBooksPage extends Component {
           </div>
         </div>
         <div className="search-books-results">
+          <div className="search-warning-block">
+            <span className="search-warning-message">
+              Warning: The backend API uses a fixed set of cached search results and is limited to a
+              particular set of search terms, which can be found in&nbsp;
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href="https://github.com/computationalcore/myreads/blob/master/SEARCH_TERMS.md"
+              >
+                SEARCH_TERMS.md
+              </a>.
+            </span>
+          </div>
           <ol className="books-grid">
-            {filteredBooks.map(book => (
-              <li key={book.id}>
-                <Book
-                  id={book.id}
-                  title={book.title}
-                  imageLinks={book.imageLinks}
-                  shelf={book.shelf}
-                  authors={book.authors}
-                  averageRating={(book.averageRating) ? book.averageRating : 0}
-                  ratingsCount={(book.ratingsCount) ? book.ratingsCount : 0}
-                  onUpdateBook={onUpdateBook}
-                  onUpdateRating={newRating => onUpdateRating(newRating, book)}
-                />
-              </li>
-            ))}
+            {filteredBooks
+              ? filteredBooks.map(book => (
+                <li key={book.id}>
+                  <Book
+                    id={book.id}
+                    title={book.title}
+                    imageLinks={book.imageLinks}
+                    shelf={book.shelf}
+                    authors={book.authors}
+                    averageRating={(book.averageRating) ? book.averageRating : 0}
+                    ratingsCount={(book.ratingsCount) ? book.ratingsCount : 0}
+                    onUpdateBook={onUpdateBook}
+                    onUpdateRating={newRating => onUpdateRating(newRating, book)}
+                  />
+                </li>
+              ))
+              : <p>Oops! Sorry, but no books were found.</p>
+            }
           </ol>
         </div>
       </div>

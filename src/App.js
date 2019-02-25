@@ -71,10 +71,10 @@ class BooksApp extends React.Component {
   };
 
   render() {
-    const { books } = this.state;
+    const { books, isLoading } = this.state;
     return (
       <div>
-        {this.state.isLoading ? <Loading />:<div></div>}
+        {isLoading ? <Loading /> : <div />}
         <div className="app content">
           <Route path="/search" render={() => (<SearchBooksPage books={books} onUpdateBook={this.updateBook} onUpdateRating={this.updateRating} />)} />
           <Route exact path="/" render={() => (<HomePage books={books} onUpdateBook={this.updateBook} onUpdateRating={this.updateRating} />)} />

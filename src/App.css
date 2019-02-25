@@ -63,7 +63,14 @@ body, .app {
 }
 
 /* search page */
-
+.search-warning-block {
+  text-align: center;
+}
+.search-warning-message {
+  font-size: small;
+  font-weight: 600;
+  color: red;
+}
 .search-books-bar {
   position: fixed;
   width: 100%;
@@ -100,7 +107,7 @@ body, .app {
 }
 
 .search-books-results {
-  padding: 80px 10px 20px;
+  padding: 60px 10px 20px;
 }
 
 /* books grid */
