@@ -9,7 +9,10 @@
  - [How it works](#how-it-works)
 	 - [Home Page](#home-page)
 	 - [Search Books Page](#search-books-page)
-
+- [Backend Server](#backend-server)
+	 - [getAll()](#getall)
+	 - [update()](#update)
+	 - [search()](#search)
 ## How to install
 To clone and run this application, you'll need [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm]) installed on your computer. From your command line, type:
 
@@ -102,4 +105,5 @@ search(query, maxResults)
 
 ## Important
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.
+
 [(Back to top)](#myreads)
